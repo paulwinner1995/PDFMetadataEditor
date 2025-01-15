@@ -6,13 +6,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class PDFMetadataEditor extends Application {
   @Override
   public void start(Stage stage) throws IOException {
-    FXMLLoader fxmlLoader = new FXMLLoader(PDFMetadataEditor.class.getResource("main-view.fxml"));
-    Scene scene = new Scene(fxmlLoader.load());
-    stage.setTitle("Редактор метаданных PDF документов");
+    var bundle = ResourceBundle.getBundle("i18n/text");
+    var loader = new FXMLLoader(PDFMetadataEditor.class.getResource("main-view.fxml"));
+
+    loader.setResources(bundle);
+
+    Scene scene = new Scene(loader.load());
+    stage.setTitle(bundle.getString("app.title"));
     stage.setScene(scene);
     stage.show();
   }

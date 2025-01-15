@@ -15,9 +15,9 @@
 <VBox alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.ppadalka.pdfmetadataeditor.PDFMetadataEditorView">
     <MenuBar>
-        <Menu text="Файл">
-            <MenuItem text="Открыть..."/>
-            <MenuItem text="Сохранить"/>
+        <Menu text="%menu.file">
+            <MenuItem text="%menu.file.open"/>
+            <MenuItem text="%menu.file.save"/>
         </Menu>
     </MenuBar>
     <GridPane hgap="10" vgap="10">
@@ -25,49 +25,49 @@
             <Insets topRightBottomLeft="20"/>
         </padding>
         <!-- File name -->
-        <Label text="Файл:"
+        <Label text="%label.file"
                GridPane.rowIndex="0"
                GridPane.columnIndex="0"/>
         <CheckBox fx:id="readOnly"
-                  text="Только просмотр"
+                  text="%checkbox.readonly"
                   GridPane.rowIndex="0"
                   GridPane.columnIndex="1"
                   selected="true"
                   onAction="#onReadOnlyStatusChanges"/>
         <!-- Title -->
-        <Label text="Заголовок:"
+        <Label text="%label.title"
                GridPane.rowIndex="1"
                GridPane.columnIndex="0"/>
         <TextField fx:id="title"
                    GridPane.rowIndex="1"
                    GridPane.columnIndex="1" disable="true"/>
         <!-- Author -->
-        <Label text="Автор:"
+        <Label text="%label.author"
                GridPane.rowIndex="2"
                GridPane.columnIndex="0"/>
         <TextField fx:id="author"
                    GridPane.rowIndex="2"
                    GridPane.columnIndex="1" disable="true"/>
         <!-- Subject -->
-        <Label text="Тема:"
+        <Label text="%label.subject"
                GridPane.rowIndex="3"
                GridPane.columnIndex="0"/>
         <TextField fx:id="subject"
                    GridPane.rowIndex="3"
                    GridPane.columnIndex="1" disable="true"/>
         <!-- Keywords -->
-        <Label text="Ключевые слова:"
+        <Label text="%label.keywords"
                GridPane.rowIndex="4"
                GridPane.columnIndex="0" />
         <TextArea fx:id="keywords"
                   GridPane.rowIndex="4"
                   GridPane.columnIndex="1" disable="true"/>
         <!-- Created -->
-        <Label text="Создан:"
+        <Label text="%label.created"
                GridPane.rowIndex="5"
                GridPane.columnIndex="0"/>
         <!-- Modified -->
-        <Label text="Изменен:"
+        <Label text="%label.modified"
                GridPane.rowIndex="6"
                GridPane.columnIndex="0"/>
     </GridPane>
@@ -75,6 +75,6 @@
         <padding>
             <Insets topRightBottomLeft="20"/>
         </padding>
-        <Button text="Закрыть" onAction="#onClose"/>
+        <Button text="%button.close" onAction="#onClose"/>
     </HBox>
 </VBox>
