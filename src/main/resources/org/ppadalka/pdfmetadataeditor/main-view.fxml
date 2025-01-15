@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<VBox alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.ppadalka.pdfmetadataeditor.PDFMetadataEditorView">
+    <MenuBar>
+        <Menu text="Файл">
+            <MenuItem text="Открыть..."/>
+            <MenuItem text="Сохранить"/>
+        </Menu>
+    </MenuBar>
+    <GridPane hgap="10" vgap="10">
+        <padding>
+            <Insets topRightBottomLeft="20"/>
+        </padding>
+        <!-- File name -->
+        <Label text="Файл:"
+               GridPane.rowIndex="0"
+               GridPane.columnIndex="0"/>
+        <CheckBox fx:id="readOnly"
+                  text="Только просмотр"
+                  GridPane.rowIndex="0"
+                  GridPane.columnIndex="1"
+                  selected="true"
+                  onAction="#onReadOnlyStatusChanges"/>
+        <!-- Title -->
+        <Label text="Заголовок:"
+               GridPane.rowIndex="1"
+               GridPane.columnIndex="0"/>
+        <TextField fx:id="title"
+                   GridPane.rowIndex="1"
+                   GridPane.columnIndex="1" disable="true"/>
+        <!-- Author -->
+        <Label text="Автор:"
+               GridPane.rowIndex="2"
+               GridPane.columnIndex="0"/>
+        <TextField fx:id="author"
+                   GridPane.rowIndex="2"
+                   GridPane.columnIndex="1" disable="true"/>
+        <!-- Subject -->
+        <Label text="Тема:"
+               GridPane.rowIndex="3"
+               GridPane.columnIndex="0"/>
+        <TextField fx:id="subject"
+                   GridPane.rowIndex="3"
+                   GridPane.columnIndex="1" disable="true"/>
+        <!-- Keywords -->
+        <Label text="Ключевые слова:"
+               GridPane.rowIndex="4"
+               GridPane.columnIndex="0" />
+        <TextArea fx:id="keywords"
+                  GridPane.rowIndex="4"
+                  GridPane.columnIndex="1" disable="true"/>
+        <!-- Created -->
+        <Label text="Создан:"
+               GridPane.rowIndex="5"
+               GridPane.columnIndex="0"/>
+        <!-- Modified -->
+        <Label text="Изменен:"
+               GridPane.rowIndex="6"
+               GridPane.columnIndex="0"/>
+    </GridPane>
+    <HBox alignment="TOP_RIGHT" spacing="10">
+        <padding>
+            <Insets topRightBottomLeft="20"/>
+        </padding>
+        <Button text="Закрыть" onAction="#onClose"/>
+    </HBox>
+</VBox>
