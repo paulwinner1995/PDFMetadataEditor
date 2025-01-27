@@ -9,4 +9,6 @@ module org.ppadalka.pdfmetadataeditor {
 
   opens org.ppadalka.pdfmetadataeditor to javafx.fxml;
   exports org.ppadalka.pdfmetadataeditor;
+  exports org.ppadalka.pdfmetadataeditor.dialog;
+  opens org.ppadalka.pdfmetadataeditor.dialog to javafx.fxml;
 }

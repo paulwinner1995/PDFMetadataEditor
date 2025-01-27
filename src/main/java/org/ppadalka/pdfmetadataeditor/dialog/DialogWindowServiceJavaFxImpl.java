@@ -1,4 +1,4 @@
-package org.ppadalka.pdfmetadataeditor;
+package org.ppadalka.pdfmetadataeditor.dialog;
 
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -12,11 +12,11 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
-public class DialogWindowService {
+public class DialogWindowServiceJavaFxImpl implements DialogWindowService {
   private final ResourceBundle bundle;
   private final Stage window;
 
-  public DialogWindowService(final ResourceBundle bundle, final Stage window) {
+  public DialogWindowServiceJavaFxImpl(final ResourceBundle bundle, final Stage window) {
     this.bundle = bundle;
     this.window = window;
   }

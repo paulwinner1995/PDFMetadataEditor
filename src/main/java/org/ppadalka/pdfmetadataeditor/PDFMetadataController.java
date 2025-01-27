@@ -1,5 +1,6 @@
 package org.ppadalka.pdfmetadataeditor;
 
+import org.ppadalka.pdfmetadataeditor.dialog.DialogWindowService;
 import java.io.IOException;
 
 public class PDFMetadataController {
