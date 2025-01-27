@@ -9,8 +9,12 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class PDFMetadataEditor extends Application {
-  private PDFMetadataEditorView build() {
-    return new PDFMetadataEditorView(new PDFMetadataController());
+  // TODO: Use some dependency injection mechanism here
+  private PDFMetadataEditorView build(ResourceBundle bundle, Stage stage) {
+    final var dialogWindowService = new DialogWindowService(bundle, stage);
+    final var controller = new PDFMetadataController(dialogWindowService);
+
+    return new PDFMetadataEditorView(controller);
   }
 
   @Override
@@ -19,7 +23,7 @@ public class PDFMetadataEditor extends Application {
     var loader = new FXMLLoader(PDFMetadataEditor.class.getResource("main-view.fxml"));
 
     loader.setResources(bundle);
-    loader.setControllerFactory(t -> build());
+    loader.setControllerFactory(t -> build(bundle, stage));
 
     Scene scene = new Scene(loader.load());
     stage.setTitle(bundle.getString("app.title"));

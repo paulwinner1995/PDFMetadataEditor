@@ -1,25 +1,22 @@
 package org.ppadalka.pdfmetadataeditor;
 
-import javafx.stage.FileChooser;
-
 import java.io.IOException;
 
 public class PDFMetadataController {
+  private final DialogWindowService dialogWindowService;
+
   private PDFDocumentModel model;
 
+  public PDFMetadataController(final DialogWindowService dialogWindowService) {
+    this.dialogWindowService = dialogWindowService;
+  }
+
   public void openDocument(PDFMetadataView view) {
-    var fileChooser = new FileChooser();
-    // TODO: Check this texts and extract it to bundle file
-    fileChooser.setTitle("Test open file");
-    fileChooser
-            .getExtensionFilters()
-            .add(new FileChooser.ExtensionFilter("Pdf document", "*.pdf"));
+    final var file = dialogWindowService.openPdfFile();
 
-    var file = fileChooser.showOpenDialog(null);
-
-    if (file != null) {
+    if (file.isPresent()) {
       try {
-        model = new PDFDocumentModel(file);
+        model = new PDFDocumentModel(file.get());
       } catch (IOException e) {
         // TODO: Handle it properly
         throw new RuntimeException(e);
