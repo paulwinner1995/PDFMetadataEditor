@@ -8,6 +8,7 @@ public class PDFMetadata {
   private String title;
   private String author;
   private String subject;
+  private String keywords;
   private LocalDateTime created;
   private LocalDateTime modified;
 
@@ -19,6 +20,7 @@ public class PDFMetadata {
     title = builder.title;
     author = builder.author;
     subject = builder.subject;
+    keywords = builder.keywords;
     created = builder.created;
     modified = builder.modified;
   }
@@ -37,6 +39,10 @@ public class PDFMetadata {
 
   public String getSubject() {
     return subject;
+  }
+
+  public String getKeywords() {
+    return keywords;
   }
 
   public LocalDateTime getCreated() {
@@ -58,12 +64,13 @@ public class PDFMetadata {
 
     return Objects.equals(title, that.title) &&
             Objects.equals(author, that.author) &&
-            Objects.equals(subject, that.subject);
+            Objects.equals(subject, that.subject) &&
+            Objects.equals(keywords, that.keywords);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, author, subject);
+    return Objects.hash(title, author, subject, keywords);
   }
 
   public static class Builder {
@@ -71,6 +78,7 @@ public class PDFMetadata {
     private String title;
     private String author;
     private String subject;
+    private String keywords;
     private LocalDateTime created;
     private LocalDateTime modified;
 
@@ -95,6 +103,11 @@ public class PDFMetadata {
 
     public Builder subject(final String subject) {
       this.subject = subject;
+      return this;
+    }
+
+    public Builder keywords(final String keywords) {
+      this.keywords = keywords;
       return this;
     }
 

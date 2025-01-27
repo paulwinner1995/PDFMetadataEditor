@@ -24,6 +24,7 @@ public class PDFDocumentModel {
             .title(info.getTitle())
             .author(info.getAuthor())
             .subject(info.getSubject())
+            .keywords(info.getKeywords())
             .created(info.getCreationDate()
                     .toInstant()
                     .atZone(ZoneId.systemDefault())

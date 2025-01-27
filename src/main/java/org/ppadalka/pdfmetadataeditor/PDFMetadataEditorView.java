@@ -45,6 +45,7 @@ public class PDFMetadataEditorView implements PDFMetadataView {
     title.setText(null);
     author.setText(null);
     subject.setText(null);
+    keywords.setText(null);
   }
 
   @FXML
@@ -100,6 +101,7 @@ public class PDFMetadataEditorView implements PDFMetadataView {
     fileName.setText(state.getFileName());
     title.setText(state.getTitle());
     author.setText(state.getAuthor());
+    keywords.setText(state.getKeywords());
     subject.setText(state.getSubject());
     created.setText(datetime.toString(state.getCreated()));
     modified.setText(datetime.toString(state.getModified()));
