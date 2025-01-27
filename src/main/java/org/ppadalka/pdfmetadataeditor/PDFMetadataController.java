@@ -24,12 +24,17 @@ public class PDFMetadataController {
 
       var metadata = model.getMetadata();
 
-      view.update(metadata);
+      view.updateState(metadata);
     }
   }
 
   public void toggleReadonlyMode(PDFMetadataView view) {
     final boolean readonly = view.isReadonlyModeActive();
+
+    if (readonly && view.hasChanges()) {
+      // Discard changes if enter to readonly mode
+      view.updateState(view.getBackup());
+    }
 
     view.setControlsDisable(readonly);
   }

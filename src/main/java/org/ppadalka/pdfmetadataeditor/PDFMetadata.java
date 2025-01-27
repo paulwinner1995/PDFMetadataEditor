@@ -1,6 +1,7 @@
 package org.ppadalka.pdfmetadataeditor;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class PDFMetadata {
   private String fileName;
@@ -48,6 +49,21 @@ public class PDFMetadata {
 
   public static Builder builder() {
     return new Builder();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof PDFMetadata that)) return false;
+
+    return Objects.equals(title, that.title) &&
+            Objects.equals(author, that.author) &&
+            Objects.equals(subject, that.subject);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(title, author, subject);
   }
 
   public static class Builder {

@@ -28,6 +28,8 @@ public class PDFMetadataEditorView implements PDFMetadataView {
   @FXML
   private CheckBox readonly;
 
+  private PDFMetadata backup = new PDFMetadata();
+
   private final PDFMetadataController controller;
   private final StringConverter<LocalDateTime> datetime;
 
@@ -35,6 +37,14 @@ public class PDFMetadataEditorView implements PDFMetadataView {
                                StringConverter<LocalDateTime> datetime) {
     this.controller = controller;
     this.datetime = datetime;
+  }
+
+  @FXML
+  protected void initialize() {
+    // We don't need blank line as initial value
+    title.setText(null);
+    author.setText(null);
+    subject.setText(null);
   }
 
   @FXML
@@ -58,13 +68,22 @@ public class PDFMetadataEditorView implements PDFMetadataView {
   }
 
   @Override
-  public void update(PDFMetadata metadata) {
-    fileName.setText(metadata.getFileName());
-    title.setText(metadata.getTitle());
-    author.setText(metadata.getAuthor());
-    subject.setText(metadata.getSubject());
-    created.setText(datetime.toString(metadata.getCreated()));
-    modified.setText(datetime.toString(metadata.getModified()));
+  public boolean hasChanges() {
+    return !backup.equals(getCurrentState());
+  }
+
+  @Override
+  public PDFMetadata getCurrentState() {
+    return PDFMetadata.builder()
+            .title(title.getText())
+            .subject(subject.getText())
+            .author(author.getText())
+            .build();
+  }
+
+  @Override
+  public PDFMetadata getBackup() {
+    return backup;
   }
 
   @Override
@@ -73,5 +92,16 @@ public class PDFMetadataEditorView implements PDFMetadataView {
     subject.setDisable(readonly);
     author.setDisable(readonly);
     keywords.setDisable(readonly);
+  }
+
+  @Override
+  public void updateState(PDFMetadata state) {
+    backup = state;
+    fileName.setText(state.getFileName());
+    title.setText(state.getTitle());
+    author.setText(state.getAuthor());
+    subject.setText(state.getSubject());
+    created.setText(datetime.toString(state.getCreated()));
+    modified.setText(datetime.toString(state.getModified()));
   }
 }
