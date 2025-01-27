@@ -12,11 +12,12 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.text.Text?>
 <VBox alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.ppadalka.pdfmetadataeditor.PDFMetadataEditorView">
     <MenuBar>
         <Menu text="%menu.file">
-            <MenuItem text="%menu.file.open"/>
+            <MenuItem text="%menu.file.open" onAction="#onFileOpen"/>
             <MenuItem text="%menu.file.save"/>
         </Menu>
     </MenuBar>
@@ -66,10 +67,16 @@
         <Label text="%label.created"
                GridPane.rowIndex="5"
                GridPane.columnIndex="0"/>
+        <Text fx:id="created"
+              GridPane.rowIndex="5"
+              GridPane.columnIndex="1"/>
         <!-- Modified -->
         <Label text="%label.modified"
                GridPane.rowIndex="6"
                GridPane.columnIndex="0"/>
+        <Text fx:id="modified"
+              GridPane.rowIndex="6"
+              GridPane.columnIndex="1"/>
     </GridPane>
     <HBox alignment="TOP_RIGHT" spacing="10">
         <padding>
