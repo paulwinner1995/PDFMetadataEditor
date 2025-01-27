@@ -4,8 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.converter.LocalDateTimeStringConverter;
 
 import java.io.IOException;
+import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 
 public class PDFMetadataEditor extends Application {
@@ -14,7 +16,10 @@ public class PDFMetadataEditor extends Application {
     final var dialogWindowService = new DialogWindowService(bundle, stage);
     final var controller = new PDFMetadataController(dialogWindowService);
 
-    return new PDFMetadataEditorView(controller);
+    return new PDFMetadataEditorView(controller, new LocalDateTimeStringConverter(
+            FormatStyle.MEDIUM,
+            FormatStyle.MEDIUM
+    ));
   }
 
   @Override

@@ -6,6 +6,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.util.StringConverter;
+
+import java.time.LocalDateTime;
 
 public class PDFMetadataEditorView implements PDFMetadataView {
   @FXML
@@ -26,9 +29,12 @@ public class PDFMetadataEditorView implements PDFMetadataView {
   private CheckBox readOnly;
 
   private final PDFMetadataController controller;
+  private final StringConverter<LocalDateTime> datetime;
 
-  public PDFMetadataEditorView(PDFMetadataController controller) {
+  public PDFMetadataEditorView(PDFMetadataController controller,
+                               StringConverter<LocalDateTime> datetime) {
     this.controller = controller;
+    this.datetime = datetime;
   }
 
   @FXML
@@ -57,7 +63,7 @@ public class PDFMetadataEditorView implements PDFMetadataView {
     title.setText(metadata.getTitle());
     author.setText(metadata.getAuthor());
     subject.setText(metadata.getSubject());
-    created.setText(metadata.getCreated().toString());
-    modified.setText(metadata.getModified().toString());
+    created.setText(datetime.toString(metadata.getCreated()));
+    modified.setText(datetime.toString(metadata.getModified()));
   }
 }
