@@ -5,7 +5,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 public class PDFDocumentModel {
@@ -24,14 +23,16 @@ public class PDFDocumentModel {
             .title(info.getTitle())
             .author(info.getAuthor())
             .subject(info.getSubject())
-            .created(LocalDateTime.ofInstant(
-                    info.getCreationDate().toInstant(),
-                    ZoneId.systemDefault()
-            ))
-            .modified(LocalDateTime.ofInstant(
-                    info.getModificationDate().toInstant(),
-                    ZoneId.systemDefault()
-            ))
+            .created(info.getCreationDate()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime()
+            )
+            .modified(info.getModificationDate()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime()
+            )
             .build();
   }
 }
