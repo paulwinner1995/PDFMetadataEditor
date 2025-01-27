@@ -83,10 +83,10 @@
         <padding>
             <Insets topRightBottomLeft="20"/>
         </padding>
-        <CheckBox fx:id="readOnly"
+        <CheckBox fx:id="readonly"
                   text="%checkbox.readonly"
                   selected="true"
-                  onAction="#onReadOnlyStatusChanges"/>
+                  onAction="#onReadonlyModeToggle"/>
         <Button text="%button.close" onAction="#onClose"/>
     </HBox>
 </VBox>

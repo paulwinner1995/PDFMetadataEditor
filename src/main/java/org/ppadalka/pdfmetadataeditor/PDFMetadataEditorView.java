@@ -26,7 +26,7 @@ public class PDFMetadataEditorView implements PDFMetadataView {
   @FXML
   private Text modified;
   @FXML
-  private CheckBox readOnly;
+  private CheckBox readonly;
 
   private final PDFMetadataController controller;
   private final StringConverter<LocalDateTime> datetime;
@@ -38,13 +38,8 @@ public class PDFMetadataEditorView implements PDFMetadataView {
   }
 
   @FXML
-  protected void onReadOnlyStatusChanges() {
-    final boolean isReadOnly = readOnly.isSelected();
-
-    title.setDisable(isReadOnly);
-    subject.setDisable(isReadOnly);
-    author.setDisable(isReadOnly);
-    keywords.setDisable(isReadOnly);
+  protected void onReadonlyModeToggle() {
+    controller.toggleReadonlyMode(this);
   }
 
   @FXML
@@ -58,6 +53,11 @@ public class PDFMetadataEditorView implements PDFMetadataView {
   }
 
   @Override
+  public boolean isReadonlyModeActive() {
+    return readonly.isSelected();
+  }
+
+  @Override
   public void update(PDFMetadata metadata) {
     fileName.setText(metadata.getFileName());
     title.setText(metadata.getTitle());
@@ -65,5 +65,13 @@ public class PDFMetadataEditorView implements PDFMetadataView {
     subject.setText(metadata.getSubject());
     created.setText(datetime.toString(metadata.getCreated()));
     modified.setText(datetime.toString(metadata.getModified()));
+  }
+
+  @Override
+  public void setControlsDisable(boolean readonly) {
+    title.setDisable(readonly);
+    subject.setDisable(readonly);
+    author.setDisable(readonly);
+    keywords.setDisable(readonly);
   }
 }

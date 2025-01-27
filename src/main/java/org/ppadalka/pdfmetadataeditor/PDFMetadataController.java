@@ -27,4 +27,10 @@ public class PDFMetadataController {
       view.update(metadata);
     }
   }
+
+  public void toggleReadonlyMode(PDFMetadataView view) {
+    final boolean readonly = view.isReadonlyModeActive();
+
+    view.setControlsDisable(readonly);
+  }
 }
