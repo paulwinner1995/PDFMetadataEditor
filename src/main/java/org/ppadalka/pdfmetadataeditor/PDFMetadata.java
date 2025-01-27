@@ -3,6 +3,7 @@ package org.ppadalka.pdfmetadataeditor;
 import java.time.LocalDateTime;
 
 public class PDFMetadata {
+  private String fileName;
   private String title;
   private String author;
   private String subject;
@@ -13,11 +14,16 @@ public class PDFMetadata {
   }
 
   private PDFMetadata(final Builder builder) {
+    fileName = builder.fileName;
     title = builder.title;
     author = builder.author;
     subject = builder.subject;
     created = builder.created;
     modified = builder.modified;
+  }
+
+  public String getFileName() {
+    return fileName;
   }
 
   public String getTitle() {
@@ -45,6 +51,7 @@ public class PDFMetadata {
   }
 
   public static class Builder {
+    private String fileName;
     private String title;
     private String author;
     private String subject;
@@ -53,6 +60,11 @@ public class PDFMetadata {
 
     public PDFMetadata build() {
       return new PDFMetadata(this);
+    }
+
+    public Builder fileName(final String fileName) {
+      this.fileName = fileName;
+      return this;
     }
 
     public Builder title(final String title) {

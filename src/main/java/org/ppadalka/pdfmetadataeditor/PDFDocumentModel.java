@@ -20,6 +20,7 @@ public class PDFDocumentModel {
     var info = document.getDocumentInformation();
 
     return PDFMetadata.builder()
+            .fileName(file.getName())
             .title(info.getTitle())
             .author(info.getAuthor())
             .subject(info.getSubject())

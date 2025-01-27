@@ -9,6 +9,8 @@ import javafx.scene.text.Text;
 
 public class PDFMetadataEditorView implements PDFMetadataView {
   @FXML
+  private Text fileName;
+  @FXML
   private TextField title;
   @FXML
   private TextField subject;
@@ -51,6 +53,7 @@ public class PDFMetadataEditorView implements PDFMetadataView {
 
   @Override
   public void update(PDFMetadata metadata) {
+    fileName.setText(metadata.getFileName());
     title.setText(metadata.getTitle());
     author.setText(metadata.getAuthor());
     subject.setText(metadata.getSubject());
