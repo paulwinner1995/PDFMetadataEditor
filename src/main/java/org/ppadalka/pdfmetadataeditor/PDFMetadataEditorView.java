@@ -59,8 +59,8 @@ public class PDFMetadataEditorView implements PDFMetadataView {
   }
 
   @FXML
-  protected void onClose() {
-    Platform.exit();
+  protected void onCloseButtonClick() {
+    controller.close(this);
   }
 
   @Override
@@ -105,5 +105,10 @@ public class PDFMetadataEditorView implements PDFMetadataView {
     subject.setText(state.getSubject());
     created.setText(datetime.toString(state.getCreated()));
     modified.setText(datetime.toString(state.getModified()));
+  }
+
+  @Override
+  public void close() {
+    Platform.exit();
   }
 }

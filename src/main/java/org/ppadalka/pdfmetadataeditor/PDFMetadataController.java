@@ -38,4 +38,11 @@ public class PDFMetadataController {
 
     view.setControlsDisable(readonly);
   }
+
+  public void close(PDFMetadataView view) {
+    if (!view.hasChanges() || dialogWindowService.discardChanges()) {
+      // TODO: Close model
+      view.close();
+    }
+  }
 }

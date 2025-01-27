@@ -87,6 +87,6 @@
                   text="%checkbox.readonly"
                   selected="true"
                   onAction="#onReadonlyModeToggle"/>
-        <Button text="%button.close" onAction="#onClose"/>
+        <Button text="%button.close" onAction="#onCloseButtonClick"/>
     </HBox>
 </VBox>

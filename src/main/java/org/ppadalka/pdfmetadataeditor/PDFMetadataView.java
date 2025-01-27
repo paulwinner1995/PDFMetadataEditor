@@ -12,4 +12,6 @@ public interface PDFMetadataView {
   void setControlsDisable(final boolean disable);
 
   void updateState(final PDFMetadata state);
+
+  void close();
 }
