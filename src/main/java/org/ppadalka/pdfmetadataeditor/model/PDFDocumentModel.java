@@ -6,8 +6,10 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.time.ZoneId;
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class PDFDocumentModel {
   private final Path filePath;
@@ -18,7 +20,7 @@ public class PDFDocumentModel {
     this.document = Loader.loadPDF(file);
   }
 
-  public PDFMetadata getMetadata() {
+  public PDFMetadata getMetadata(final Function<Calendar, LocalDateTime> converter) {
     final var info = document.getDocumentInformation();
 
     return PDFMetadata.builder()
@@ -28,27 +30,19 @@ public class PDFDocumentModel {
             .author(info.getAuthor())
             .subject(info.getSubject())
             .keywords(info.getKeywords())
-            .created(info.getCreationDate()
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime()
-            )
-            .modified(info.getModificationDate()
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime()
-            )
+            .created(converter.apply(info.getCreationDate()))
+            .modified(converter.apply(info.getModificationDate()))
             .build();
   }
 
-  public void setMetadata(final PDFMetadata metadata, final Calendar modificationDate) {
+  public void setMetadata(final PDFMetadata metadata, final Supplier<Calendar> currentMoment) {
     final var info = document.getDocumentInformation();
 
     info.setTitle(metadata.getTitle());
     info.setAuthor(metadata.getAuthor());
     info.setSubject(metadata.getSubject());
     info.setKeywords(metadata.getKeywords());
-    info.setModificationDate(modificationDate);
+    info.setModificationDate(currentMoment.get());
   }
 
   public void saveWithReplace() throws IOException {

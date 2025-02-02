@@ -8,19 +8,19 @@ import org.ppadalka.pdfmetadataeditor.view.PDFMetadataView;
 import java.io.IOException;
 
 public class PDFMetadataController {
-  private final DialogWindowService dialogWindowService;
-  private final CalendarService calendarService;
+  private final DialogWindowService dialog;
+  private final CalendarService calendar;
 
   private PDFDocumentModel model;
 
-  public PDFMetadataController(final DialogWindowService dialogWindowService,
-                               final CalendarService calendarService) {
-    this.dialogWindowService = dialogWindowService;
-    this.calendarService = calendarService;
+  public PDFMetadataController(final DialogWindowService dialog,
+                               final CalendarService calendar) {
+    this.dialog = dialog;
+    this.calendar = calendar;
   }
 
   public void openDocument(PDFMetadataView view) {
-    final var file = dialogWindowService.openPdfFile();
+    final var file = dialog.openPdfFile();
 
     if (file.isPresent()) {
       try {
@@ -32,7 +32,7 @@ public class PDFMetadataController {
         throw new RuntimeException(e);
       }
 
-      view.notifyStateUpdated(model.getMetadata());
+      view.notifyStateUpdated(model.getMetadata(calendar::toLocalDateTime));
       view.notifyFileOpened();
     }
   }
@@ -42,14 +42,14 @@ public class PDFMetadataController {
     final var fileName = metadata.getFileName();
 
     try {
-      model.setMetadata(view.getCurrentState(), calendarService.getCurrentMoment());
+      model.setMetadata(view.getCurrentState(), calendar::getCurrentMoment);
       model.saveWithReplace();
 
-      view.notifyStateUpdated(model.getMetadata());
+      view.notifyStateUpdated(model.getMetadata(calendar::toLocalDateTime));
 
-      dialogWindowService.showFileSaveSuccessAlert(fileName);
+      dialog.showFileSaveSuccessAlert(fileName);
     } catch (IOException e) {
-      dialogWindowService.showFileSaveFailedAlert(metadata.getFileName());
+      dialog.showFileSaveFailedAlert(metadata.getFileName());
       // TODO: Replace with logger
       System.err.println(e.getMessage());
     }
@@ -67,7 +67,7 @@ public class PDFMetadataController {
   }
 
   public void close(PDFMetadataView view) {
-    if (!view.hasChanges() || dialogWindowService.discardChanges()) {
+    if (!view.hasChanges() || dialog.discardChanges()) {
       // TODO: Show we close model here also?
       view.close();
     }
