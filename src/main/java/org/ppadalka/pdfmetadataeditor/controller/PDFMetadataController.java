@@ -26,6 +26,8 @@ public class PDFMetadataController {
       try {
         model = new PDFDocumentModel(file.get());
       } catch (IOException e) {
+        // TODO: Show alert that document is protected by password
+        // TODO: Show alert that document is corrupted
         // TODO: Handle it properly
         throw new RuntimeException(e);
       }
