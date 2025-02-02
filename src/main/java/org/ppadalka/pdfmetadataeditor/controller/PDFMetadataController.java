@@ -41,7 +41,7 @@ public class PDFMetadataController {
 
     try {
       model.setMetadata(view.getCurrentState(), calendarService.getCurrentMoment());
-      model.save();
+      model.saveWithReplace();
 
       dialogWindowService.showSaveFileNotification(fileName);
 

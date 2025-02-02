@@ -51,7 +51,7 @@ public class PDFDocumentModel {
     info.setModificationDate(modificationDate);
   }
 
-  public void save() throws IOException {
+  public void saveWithReplace() throws IOException {
     final var sourceFile = filePath.toFile();
 
     if (sourceFile.delete()) {
