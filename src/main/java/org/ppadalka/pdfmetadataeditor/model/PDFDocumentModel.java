@@ -5,15 +5,16 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.time.ZoneId;
 import java.util.Calendar;
 
 public class PDFDocumentModel {
-  private final File file;
+  private final Path filePath;
   private final PDDocument document;
 
   public PDFDocumentModel(File file) throws IOException {
-    this.file = file;
+    this.filePath = file.toPath();
     this.document = Loader.loadPDF(file);
   }
 
@@ -21,7 +22,8 @@ public class PDFDocumentModel {
     final var info = document.getDocumentInformation();
 
     return PDFMetadata.builder()
-            .fileName(file.getName())
+            .fileName(filePath.getFileName()
+                    .toString())
             .title(info.getTitle())
             .author(info.getAuthor())
             .subject(info.getSubject())
@@ -50,6 +52,11 @@ public class PDFDocumentModel {
   }
 
   public void save() throws IOException {
-    document.save(file);
+    final var sourceFile = filePath.toFile();
+
+    if (sourceFile.delete()) {
+      document.save(filePath.toFile());
+    }
+    // TODO: What if file cannot be deleted?
   }
 }
