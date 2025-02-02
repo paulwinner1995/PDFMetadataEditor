@@ -1,10 +1,10 @@
 package org.ppadalka.pdfmetadataeditor.view;
 
-import org.ppadalka.pdfmetadataeditor.model.PDFMetadata;
+import org.ppadalka.pdfmetadataeditor.dto.PDFMetadataView;
 
 public interface PDFMetadataEditorView {
 
-  void notifyMetadataUpdated(final PDFMetadata state);
+  void notifyMetadataUpdated(final PDFMetadataView metadata);
 
   void notifyFileOpened();
 

@@ -1,7 +1,6 @@
 package org.ppadalka.pdfmetadataeditor.view;
 
 import javafx.application.Platform;
-import javafx.beans.value.WeakChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Menu;
@@ -11,7 +10,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import org.ppadalka.pdfmetadataeditor.controller.PDFMetadataController;
-import org.ppadalka.pdfmetadataeditor.model.PDFMetadata;
+import org.ppadalka.pdfmetadataeditor.dto.PDFMetadataView;
 
 import java.time.LocalDateTime;
 import java.util.function.Consumer;
@@ -77,7 +76,7 @@ public class PDFMetadataEditorViewImpl implements PDFMetadataEditorView {
   }
 
   @Override
-  public void notifyMetadataUpdated(final PDFMetadata metadata) {
+  public void notifyMetadataUpdated(final PDFMetadataView metadata) {
     fileName.setText(metadata.getFileName());
     title.setText(metadata.getTitle());
     author.setText(metadata.getAuthor());

@@ -2,21 +2,19 @@ package org.ppadalka.pdfmetadataeditor.controller;
 
 import org.ppadalka.pdfmetadataeditor.dialog.DialogWindowService;
 import org.ppadalka.pdfmetadataeditor.model.PDFDocumentModel;
-import org.ppadalka.pdfmetadataeditor.model.PDFMetadata;
-import org.ppadalka.pdfmetadataeditor.model.PDFMetadataAdapter;
+import org.ppadalka.pdfmetadataeditor.dto.PDFMetadataForm;
 import org.ppadalka.pdfmetadataeditor.time.CalendarService;
 import org.ppadalka.pdfmetadataeditor.view.PDFMetadataEditorView;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.function.Consumer;
 
-public class PDFMetadataController implements PDFMetadataAdapter {
+public class PDFMetadataController implements PDFMetadataForm {
   private final DialogWindowService dialog;
   private final CalendarService calendar;
 
   private PDFDocumentModel document;
-  private PDFMetadataState state;
+  private PDFMetadataState form = PDFMetadataState.empty();
 
   public PDFMetadataController(final DialogWindowService dialog,
                                final CalendarService calendar) {
@@ -39,13 +37,13 @@ public class PDFMetadataController implements PDFMetadataAdapter {
         throw new RuntimeException(e);
       }
 
-      view.notifyMetadataUpdated(state.getValue());
+      view.notifyMetadataUpdated(form.getValue());
       view.notifyFileOpened();
     }
   }
 
   public void saveDocument(PDFMetadataEditorView view) {
-    final var metadata = state.getValue();
+    final var metadata = form.getValue();
     final var fileName = metadata.getFileName();
 
     try {
@@ -54,7 +52,7 @@ public class PDFMetadataController implements PDFMetadataAdapter {
 
       updateState();
 
-      view.notifyMetadataUpdated(state.getValue());
+      view.notifyMetadataUpdated(form.getValue());
 
       dialog.showFileSaveSuccessAlert(fileName);
     } catch (IOException e) {
@@ -66,16 +64,15 @@ public class PDFMetadataController implements PDFMetadataAdapter {
 
   public Consumer<Boolean> createReadonlyModeToggleSubscriber(PDFMetadataEditorView view) {
     return readonly -> {
-      if (readonly && state.hasChanges()) {
-        state.restore();
-        // Discard changes if enter to readonly mode
-        view.notifyMetadataUpdated(state.getValue());
+      if (readonly && form.hasChanges()) {
+        form.restore();
+        view.notifyMetadataUpdated(form.getValue()); // Discard changes if enter to readonly mode
       }
     };
   }
 
   public void close(PDFMetadataEditorView view) {
-    if (!state.hasChanges() || dialog.discardChanges()) {
+    if (!form.hasChanges() || dialog.discardChanges()) {
       // TODO: Show we close model here also?
       view.close();
     }
@@ -83,67 +80,25 @@ public class PDFMetadataController implements PDFMetadataAdapter {
 
   @Override
   public void setTitle(final String title) {
-    state.setTitle(title);
+    form.setTitle(title);
   }
 
   @Override
   public void setAuthor(final String author) {
-    state.setAuthor(author);
+    form.setAuthor(author);
   }
 
   @Override
   public void setSubject(final String subject) {
-    state.setSubject(subject);
+    form.setSubject(subject);
   }
 
   @Override
   public void setKeywords(final String keywords) {
-    state.setKeywords(keywords);
+    form.setKeywords(keywords);
   }
 
   private void updateState() {
-    state = new PDFMetadataState(document.getMetadata(calendar::toLocalDateTime));
-  }
-
-  private final static class PDFMetadataState implements PDFMetadataAdapter {
-    private PDFMetadata value;
-    private final PDFMetadata backup;
-
-    public PDFMetadataState(final PDFMetadata metadata) {
-      this.value = metadata;
-      this.backup = metadata.copy();
-    }
-
-    public void restore() {
-      this.value = backup.copy();
-    }
-
-    public boolean hasChanges() {
-      return !Objects.equals(value, backup);
-    }
-
-    public PDFMetadata getValue() {
-      return value;
-    }
-
-    @Override
-    public void setTitle(final String title) {
-      this.value.setTitle(title);
-    }
-
-    @Override
-    public void setAuthor(final String author) {
-      this.value.setAuthor(author);
-    }
-
-    @Override
-    public void setSubject(final String subject) {
-      this.value.setSubject(subject);
-    }
-
-    @Override
-    public void setKeywords(final String keywords) {
-      this.value.setKeywords(keywords);
-    }
+    form = PDFMetadataState.from(document.getMetadata(calendar::toLocalDateTime));
   }
 }

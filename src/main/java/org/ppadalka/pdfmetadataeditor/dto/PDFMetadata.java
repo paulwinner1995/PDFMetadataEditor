@@ -1,9 +1,9 @@
-package org.ppadalka.pdfmetadataeditor.model;
+package org.ppadalka.pdfmetadataeditor.dto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class PDFMetadata {
+public class PDFMetadata implements PDFMetadataForm, PDFMetadataView {
   private final String fileName;
   private String title;
   private String author;
@@ -34,46 +34,57 @@ public class PDFMetadata {
             .build();
   }
 
+  @Override
   public String getFileName() {
     return fileName;
   }
 
+  @Override
   public String getTitle() {
     return title;
   }
 
+  @Override
   public void setTitle(final String title) {
     this.title = title;
   }
 
+  @Override
   public String getAuthor() {
     return author;
   }
 
+  @Override
   public void setAuthor(final String author) {
     this.author = author;
   }
 
+  @Override
   public String getSubject() {
     return subject;
   }
 
+  @Override
   public void setSubject(final String subject) {
     this.subject = subject;
   }
 
+  @Override
   public String getKeywords() {
     return keywords;
   }
 
+  @Override
   public void setKeywords(final String keywords) {
     this.keywords = keywords;
   }
 
+  @Override
   public LocalDateTime getCreated() {
     return created;
   }
 
+  @Override
   public LocalDateTime getModified() {
     return modified;
   }

@@ -2,6 +2,7 @@ package org.ppadalka.pdfmetadataeditor.model;
 
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.ppadalka.pdfmetadataeditor.dto.PDFMetadata;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,11 +13,11 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class PDFDocumentModel {
-  private final Path filePath;
+  private final Path filepath;
   private final PDDocument document;
 
   public PDFDocumentModel(File file) throws IOException {
-    this.filePath = file.toPath();
+    this.filepath = file.toPath();
     this.document = Loader.loadPDF(file);
   }
 
@@ -24,7 +25,7 @@ public class PDFDocumentModel {
     final var info = document.getDocumentInformation();
 
     return PDFMetadata.builder()
-            .fileName(filePath.getFileName()
+            .fileName(filepath.getFileName()
                     .toString())
             .title(info.getTitle())
             .author(info.getAuthor())
@@ -46,10 +47,10 @@ public class PDFDocumentModel {
   }
 
   public void saveWithReplace() throws IOException {
-    final var sourceFile = filePath.toFile();
+    final var sourceFile = filepath.toFile();
 
     if (sourceFile.delete()) {
-      document.save(filePath.toFile());
+      document.save(filepath.toFile());
     }
 
     // TODO: What if file cannot be deleted?

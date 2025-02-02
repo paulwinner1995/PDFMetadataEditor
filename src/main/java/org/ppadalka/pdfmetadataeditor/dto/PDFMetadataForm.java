@@ -1,6 +1,6 @@
-package org.ppadalka.pdfmetadataeditor.model;
+package org.ppadalka.pdfmetadataeditor.dto;
 
-public interface PDFMetadataAdapter {
+public interface PDFMetadataForm {
   void setTitle(final String title);
 
   void setAuthor(final String author);
