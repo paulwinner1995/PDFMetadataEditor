@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.converter.LocalDateTimeStringConverter;
 import org.ppadalka.pdfmetadataeditor.controller.PDFMetadataController;
 import org.ppadalka.pdfmetadataeditor.dialog.DialogWindowServiceImpl;
@@ -15,16 +16,6 @@ import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 
 public class PDFMetadataEditorApplication extends Application {
-  // TODO: Use some dependency injection mechanism here
-  private PDFMetadataEditorViewImpl build(ResourceBundle bundle, Stage stage) {
-    final var dialogWindowService = new DialogWindowServiceImpl(bundle, stage);
-    final var controller = new PDFMetadataController(dialogWindowService, new CalendarServiceImpl());
-
-    return new PDFMetadataEditorViewImpl(controller, new LocalDateTimeStringConverter(
-            FormatStyle.MEDIUM,
-            FormatStyle.MEDIUM
-    ));
-  }
 
   @Override
   public void start(Stage stage) throws IOException {
@@ -32,12 +23,24 @@ public class PDFMetadataEditorApplication extends Application {
     var loader = new FXMLLoader(PDFMetadataEditorApplication.class.getResource("view/main.fxml"));
 
     loader.setResources(bundle);
-    loader.setControllerFactory(t -> build(bundle, stage));
+    loader.setControllerFactory(createFactory(bundle, stage));
 
     Scene scene = new Scene(loader.load());
     stage.setTitle(bundle.getString("app.title"));
     stage.setScene(scene);
     stage.show();
+  }
+
+  private Callback<Class<?>, Object> createFactory(final ResourceBundle bundle, final Stage stage) {
+    return param -> {
+      final var dialogWindowService = new DialogWindowServiceImpl(bundle, stage);
+      final var controller = new PDFMetadataController(dialogWindowService, new CalendarServiceImpl());
+
+      return new PDFMetadataEditorViewImpl(controller, new LocalDateTimeStringConverter(
+              FormatStyle.MEDIUM,
+              FormatStyle.MEDIUM
+      ));
+    };
   }
 
   public static void main(String[] args) {
