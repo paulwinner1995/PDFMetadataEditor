@@ -8,5 +8,7 @@ public interface DialogWindowService {
 
   boolean discardChanges();
 
-  void showSaveFileNotification(final String fileName);
+  void showFileSaveSuccessAlert(final String fileName);
+
+  void showFileSaveFailedAlert(final String fileName);
 }

@@ -57,6 +57,7 @@ public class PDFDocumentModel {
     if (sourceFile.delete()) {
       document.save(filePath.toFile());
     }
+
     // TODO: What if file cannot be deleted?
   }
 }

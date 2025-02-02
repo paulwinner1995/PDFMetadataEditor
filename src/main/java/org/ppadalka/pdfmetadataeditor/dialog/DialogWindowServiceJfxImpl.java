@@ -56,11 +56,20 @@ public class DialogWindowServiceJfxImpl implements DialogWindowService {
   }
 
   @Override
-  public void showSaveFileNotification(final String fileName) {
+  public void showFileSaveSuccessAlert(final String fileName) {
     final var alert = new Alert(AlertType.INFORMATION);
 
     alert.setTitle(fileName);
-    alert.setHeaderText(bundle.getString("file.save.notification.content"));
+    alert.setHeaderText(bundle.getString("alert.file.save.success.content"));
+    alert.show();
+  }
+
+  @Override
+  public void showFileSaveFailedAlert(final String fileName) {
+    final var alert = new Alert(AlertType.ERROR);
+
+    alert.setTitle(fileName);
+    alert.setHeaderText(bundle.getString("alert.file.save.failed.content"));
     alert.show();
   }
 }

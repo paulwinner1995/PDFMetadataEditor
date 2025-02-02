@@ -43,13 +43,13 @@ public class PDFMetadataController {
       model.setMetadata(view.getCurrentState(), calendarService.getCurrentMoment());
       model.saveWithReplace();
 
-      dialogWindowService.showSaveFileNotification(fileName);
+      dialogWindowService.showFileSaveSuccessAlert(fileName);
 
       view.updateState(model.getMetadata());
     } catch (IOException e) {
+      dialogWindowService.showFileSaveFailedAlert(metadata.getFileName());
       // TODO: Replace with logger
       System.err.println(e.getMessage());
-      // TODO: Show error notification
     }
   }
 
