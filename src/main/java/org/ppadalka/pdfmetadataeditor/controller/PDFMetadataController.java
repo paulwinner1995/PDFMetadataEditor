@@ -30,7 +30,7 @@ public class PDFMetadataController {
         throw new RuntimeException(e);
       }
 
-      view.updateState(model.getMetadata());
+      view.notifyStateUpdated(model.getMetadata());
       view.notifyFileOpened();
     }
   }
@@ -43,9 +43,9 @@ public class PDFMetadataController {
       model.setMetadata(view.getCurrentState(), calendarService.getCurrentMoment());
       model.saveWithReplace();
 
-      dialogWindowService.showFileSaveSuccessAlert(fileName);
+      view.notifyStateUpdated(model.getMetadata());
 
-      view.updateState(model.getMetadata());
+      dialogWindowService.showFileSaveSuccessAlert(fileName);
     } catch (IOException e) {
       dialogWindowService.showFileSaveFailedAlert(metadata.getFileName());
       // TODO: Replace with logger
@@ -58,7 +58,7 @@ public class PDFMetadataController {
 
     if (readonly && view.hasChanges()) {
       // Discard changes if enter to readonly mode
-      view.updateState(view.getBackup());
+      view.notifyStateUpdated(view.getBackup());
     }
 
     view.setControlsDisable(readonly);

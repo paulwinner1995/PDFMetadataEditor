@@ -110,7 +110,7 @@ public class PDFMetadataViewJfxImpl implements PDFMetadataView {
   }
 
   @Override
-  public void updateState(PDFMetadata state) {
+  public void notifyStateUpdated(final PDFMetadata state) {
     backup = state;
     fileName.setText(state.getFileName());
     title.setText(state.getTitle());
