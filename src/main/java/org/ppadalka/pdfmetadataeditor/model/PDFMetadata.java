@@ -4,16 +4,13 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class PDFMetadata {
-  private String fileName;
+  private final String fileName;
   private String title;
   private String author;
   private String subject;
   private String keywords;
-  private LocalDateTime created;
-  private LocalDateTime modified;
-
-  public PDFMetadata() {
-  }
+  private final LocalDateTime created;
+  private final LocalDateTime modified;
 
   private PDFMetadata(final Builder builder) {
     fileName = builder.fileName;
@@ -25,6 +22,18 @@ public class PDFMetadata {
     modified = builder.modified;
   }
 
+  public PDFMetadata copy() {
+    return PDFMetadata.builder()
+            .fileName(fileName)
+            .title(title)
+            .author(author)
+            .subject(subject)
+            .keywords(keywords)
+            .created(created)
+            .modified(modified)
+            .build();
+  }
+
   public String getFileName() {
     return fileName;
   }
@@ -33,16 +42,32 @@ public class PDFMetadata {
     return title;
   }
 
+  public void setTitle(final String title) {
+    this.title = title;
+  }
+
   public String getAuthor() {
     return author;
+  }
+
+  public void setAuthor(final String author) {
+    this.author = author;
   }
 
   public String getSubject() {
     return subject;
   }
 
+  public void setSubject(final String subject) {
+    this.subject = subject;
+  }
+
   public String getKeywords() {
     return keywords;
+  }
+
+  public void setKeywords(final String keywords) {
+    this.keywords = keywords;
   }
 
   public LocalDateTime getCreated() {

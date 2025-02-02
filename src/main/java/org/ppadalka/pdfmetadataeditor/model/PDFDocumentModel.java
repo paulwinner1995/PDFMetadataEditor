@@ -35,7 +35,7 @@ public class PDFDocumentModel {
             .build();
   }
 
-  public void setMetadata(final PDFMetadata metadata, final Supplier<Calendar> currentMoment) {
+  public void updateMetadata(final PDFMetadata metadata, final Supplier<Calendar> currentMoment) {
     final var info = document.getDocumentInformation();
 
     info.setTitle(metadata.getTitle());

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <VBox alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.ppadalka.pdfmetadataeditor.view.PDFMetadataViewJfxImpl">
+      fx:controller="org.ppadalka.pdfmetadataeditor.view.PDFMetadataEditorViewImpl">
     <MenuBar>
         <Menu fx:id="menu" text="%menu.file">
             <MenuItem id="fileOpen" text="%menu.file.open" onAction="#onFileOpen"/>
@@ -85,8 +85,7 @@
         </padding>
         <CheckBox fx:id="readonly"
                   text="%checkbox.readonly"
-                  selected="true"
-                  onAction="#onReadonlyModeToggle"/>
+                  selected="true"/>
         <Button text="%button.close" onAction="#onCloseButtonClick"/>
     </HBox>
 </VBox>

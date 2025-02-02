@@ -15,11 +15,11 @@ import java.util.ResourceBundle;
 
 import static org.ppadalka.pdfmetadataeditor.util.Predicates.buttonPressed;
 
-public class DialogWindowServiceJfxImpl implements DialogWindowService {
+public class DialogWindowServiceImpl implements DialogWindowService {
   private final ResourceBundle bundle;
   private final Stage window;
 
-  public DialogWindowServiceJfxImpl(final ResourceBundle bundle, final Stage window) {
+  public DialogWindowServiceImpl(final ResourceBundle bundle, final Stage window) {
     this.bundle = bundle;
     this.window = window;
   }

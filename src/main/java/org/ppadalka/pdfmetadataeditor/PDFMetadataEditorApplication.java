@@ -6,9 +6,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateTimeStringConverter;
 import org.ppadalka.pdfmetadataeditor.controller.PDFMetadataController;
-import org.ppadalka.pdfmetadataeditor.dialog.DialogWindowServiceJfxImpl;
+import org.ppadalka.pdfmetadataeditor.dialog.DialogWindowServiceImpl;
 import org.ppadalka.pdfmetadataeditor.time.CalendarServiceImpl;
-import org.ppadalka.pdfmetadataeditor.view.PDFMetadataViewJfxImpl;
+import org.ppadalka.pdfmetadataeditor.view.PDFMetadataEditorViewImpl;
 
 import java.io.IOException;
 import java.time.format.FormatStyle;
@@ -16,11 +16,11 @@ import java.util.ResourceBundle;
 
 public class PDFMetadataEditorApplication extends Application {
   // TODO: Use some dependency injection mechanism here
-  private PDFMetadataViewJfxImpl build(ResourceBundle bundle, Stage stage) {
-    final var dialogWindowService = new DialogWindowServiceJfxImpl(bundle, stage);
+  private PDFMetadataEditorViewImpl build(ResourceBundle bundle, Stage stage) {
+    final var dialogWindowService = new DialogWindowServiceImpl(bundle, stage);
     final var controller = new PDFMetadataController(dialogWindowService, new CalendarServiceImpl());
 
-    return new PDFMetadataViewJfxImpl(controller, new LocalDateTimeStringConverter(
+    return new PDFMetadataEditorViewImpl(controller, new LocalDateTimeStringConverter(
             FormatStyle.MEDIUM,
             FormatStyle.MEDIUM
     ));
