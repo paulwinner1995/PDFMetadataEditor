@@ -15,5 +15,7 @@ public interface PDFMetadataView {
 
   void updateState(final PDFMetadata state);
 
+  void notifyFileOpened();
+
   void close();
 }

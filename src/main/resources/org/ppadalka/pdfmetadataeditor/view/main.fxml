@@ -16,9 +16,9 @@
 <VBox alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.ppadalka.pdfmetadataeditor.view.PDFMetadataViewJfxImpl">
     <MenuBar>
-        <Menu text="%menu.file">
-            <MenuItem text="%menu.file.open" onAction="#onFileOpen"/>
-            <MenuItem text="%menu.file.save" onAction="#onFileSave"/>
+        <Menu fx:id="menu" text="%menu.file">
+            <MenuItem id="fileOpen" text="%menu.file.open" onAction="#onFileOpen"/>
+            <MenuItem id="fileSave" text="%menu.file.save" onAction="#onFileSave" disable="true"/>
         </Menu>
     </MenuBar>
     <GridPane hgap="10" vgap="10">

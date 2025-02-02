@@ -3,6 +3,7 @@ package org.ppadalka.pdfmetadataeditor.view;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -11,6 +12,8 @@ import org.ppadalka.pdfmetadataeditor.controller.PDFMetadataController;
 import org.ppadalka.pdfmetadataeditor.model.PDFMetadata;
 
 import java.time.LocalDateTime;
+
+import static org.ppadalka.pdfmetadataeditor.util.Predicates.byMenuItemId;
 
 public class PDFMetadataViewJfxImpl implements PDFMetadataView {
   @FXML
@@ -29,6 +32,8 @@ public class PDFMetadataViewJfxImpl implements PDFMetadataView {
   private Text modified;
   @FXML
   private CheckBox readonly;
+  @FXML
+  private Menu menu;
 
   private PDFMetadata backup = new PDFMetadata();
 
@@ -114,6 +119,13 @@ public class PDFMetadataViewJfxImpl implements PDFMetadataView {
     subject.setText(state.getSubject());
     created.setText(datetime.toString(state.getCreated()));
     modified.setText(datetime.toString(state.getModified()));
+  }
+
+  @Override
+  public void notifyFileOpened() {
+    menu.getItems().stream()
+            .filter(byMenuItemId("fileSave"))
+            .forEach(itm -> itm.setDisable(false));
   }
 
   @Override

@@ -12,7 +12,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
+
+import static org.ppadalka.pdfmetadataeditor.util.Predicates.buttonPressed;
 
 public class DialogWindowServiceJfxImpl implements DialogWindowService {
   private final ResourceBundle bundle;
@@ -50,7 +51,7 @@ public class DialogWindowServiceJfxImpl implements DialogWindowService {
     return dialog
             .showAndWait()
             .map(ButtonType::getButtonData)
-            .filter(pressed(ButtonData.YES))
+            .filter(buttonPressed(ButtonData.YES))
             .isPresent();
   }
 
@@ -61,9 +62,5 @@ public class DialogWindowServiceJfxImpl implements DialogWindowService {
     alert.setTitle(fileName);
     alert.setHeaderText(bundle.getString("file.save.notification.content"));
     alert.show();
-  }
-
-  private Predicate<ButtonData> pressed(final ButtonData button) {
-    return pressed -> pressed == button;
   }
 }

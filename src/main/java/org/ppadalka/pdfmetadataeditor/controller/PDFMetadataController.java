@@ -31,6 +31,7 @@ public class PDFMetadataController {
       }
 
       view.updateState(model.getMetadata());
+      view.notifyFileOpened();
     }
   }
 
@@ -46,8 +47,9 @@ public class PDFMetadataController {
 
       view.updateState(model.getMetadata());
     } catch (IOException e) {
-      // TODO: Log error and show error notification
-      throw new RuntimeException(e);
+      // TODO: Replace with logger
+      System.err.println(e.getMessage());
+      // TODO: Show error notification
     }
   }
 
