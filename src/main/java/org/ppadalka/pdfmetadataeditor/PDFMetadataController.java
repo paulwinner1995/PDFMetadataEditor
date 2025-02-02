@@ -1,15 +1,20 @@
 package org.ppadalka.pdfmetadataeditor;
 
+import org.ppadalka.pdfmetadataeditor.time.CalendarService;
 import org.ppadalka.pdfmetadataeditor.dialog.DialogWindowService;
+
 import java.io.IOException;
 
 public class PDFMetadataController {
   private final DialogWindowService dialogWindowService;
+  private final CalendarService calendarService;
 
   private PDFDocumentModel model;
 
-  public PDFMetadataController(final DialogWindowService dialogWindowService) {
+  public PDFMetadataController(final DialogWindowService dialogWindowService,
+                               final CalendarService calendarService) {
     this.dialogWindowService = dialogWindowService;
+    this.calendarService = calendarService;
   }
 
   public void openDocument(PDFMetadataView view) {
@@ -23,9 +28,24 @@ public class PDFMetadataController {
         throw new RuntimeException(e);
       }
 
-      var metadata = model.getMetadata();
+      view.updateState(model.getMetadata());
+    }
+  }
 
-      view.updateState(metadata);
+  public void saveDocument(PDFMetadataView view) {
+    final var metadata = view.getCurrentState();
+    final var fileName = metadata.getFileName();
+
+    try {
+      model.setMetadata(view.getCurrentState(), calendarService.getCurrentMoment());
+      model.save();
+
+      dialogWindowService.showSaveFileNotification(fileName);
+
+      view.updateState(model.getMetadata());
+    } catch (IOException e) {
+      // TODO: Log error and show error notification
+      throw new RuntimeException(e);
     }
   }
 
@@ -42,7 +62,7 @@ public class PDFMetadataController {
 
   public void close(PDFMetadataView view) {
     if (!view.hasChanges() || dialogWindowService.discardChanges()) {
-      // TODO: Close model
+      // TODO: Show we close model here also?
       view.close();
     }
   }

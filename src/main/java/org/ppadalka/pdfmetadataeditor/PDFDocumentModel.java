@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import java.io.File;
 import java.io.IOException;
 import java.time.ZoneId;
+import java.util.Calendar;
 
 public class PDFDocumentModel {
   private final File file;
@@ -17,7 +18,7 @@ public class PDFDocumentModel {
   }
 
   public PDFMetadata getMetadata() {
-    var info = document.getDocumentInformation();
+    final var info = document.getDocumentInformation();
 
     return PDFMetadata.builder()
             .fileName(file.getName())
@@ -36,5 +37,19 @@ public class PDFDocumentModel {
                     .toLocalDateTime()
             )
             .build();
+  }
+
+  public void setMetadata(final PDFMetadata metadata, final Calendar modificationDate) {
+    final var info = document.getDocumentInformation();
+
+    info.setTitle(metadata.getTitle());
+    info.setAuthor(metadata.getAuthor());
+    info.setSubject(metadata.getSubject());
+    info.setKeywords(metadata.getKeywords());
+    info.setModificationDate(modificationDate);
+  }
+
+  public void save() throws IOException {
+    document.save(file);
   }
 }

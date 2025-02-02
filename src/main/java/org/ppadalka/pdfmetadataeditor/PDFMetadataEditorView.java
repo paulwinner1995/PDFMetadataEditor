@@ -59,6 +59,11 @@ public class PDFMetadataEditorView implements PDFMetadataView {
   }
 
   @FXML
+  protected void onFileSave() {
+    controller.saveDocument(this);
+  }
+
+  @FXML
   protected void onCloseButtonClick() {
     controller.close(this);
   }
@@ -76,9 +81,11 @@ public class PDFMetadataEditorView implements PDFMetadataView {
   @Override
   public PDFMetadata getCurrentState() {
     return PDFMetadata.builder()
+            .fileName(fileName.getText())
             .title(title.getText())
             .subject(subject.getText())
             .author(author.getText())
+            .keywords(keywords.getText())
             .build();
   }
 

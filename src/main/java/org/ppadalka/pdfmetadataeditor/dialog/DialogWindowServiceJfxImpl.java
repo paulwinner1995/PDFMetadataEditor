@@ -1,5 +1,7 @@
 package org.ppadalka.pdfmetadataeditor.dialog;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -12,11 +14,11 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
-public class DialogWindowServiceJavaFxImpl implements DialogWindowService {
+public class DialogWindowServiceJfxImpl implements DialogWindowService {
   private final ResourceBundle bundle;
   private final Stage window;
 
-  public DialogWindowServiceJavaFxImpl(final ResourceBundle bundle, final Stage window) {
+  public DialogWindowServiceJfxImpl(final ResourceBundle bundle, final Stage window) {
     this.bundle = bundle;
     this.window = window;
   }
@@ -50,6 +52,15 @@ public class DialogWindowServiceJavaFxImpl implements DialogWindowService {
             .map(ButtonType::getButtonData)
             .filter(pressed(ButtonData.YES))
             .isPresent();
+  }
+
+  @Override
+  public void showSaveFileNotification(final String fileName) {
+    final var alert = new Alert(AlertType.INFORMATION);
+
+    alert.setTitle(fileName);
+    alert.setHeaderText(bundle.getString("file.save.notification.content"));
+    alert.show();
   }
 
   private Predicate<ButtonData> pressed(final ButtonData button) {

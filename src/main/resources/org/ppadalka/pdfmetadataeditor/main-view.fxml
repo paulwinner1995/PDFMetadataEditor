@@ -18,7 +18,7 @@
     <MenuBar>
         <Menu text="%menu.file">
             <MenuItem text="%menu.file.open" onAction="#onFileOpen"/>
-            <MenuItem text="%menu.file.save"/>
+            <MenuItem text="%menu.file.save" onAction="#onFileSave"/>
         </Menu>
     </MenuBar>
     <GridPane hgap="10" vgap="10">

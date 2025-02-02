@@ -7,4 +7,6 @@ public interface DialogWindowService {
   Optional<File> openPdfFile();
 
   boolean discardChanges();
+
+  void showSaveFileNotification(final String fileName);
 }
