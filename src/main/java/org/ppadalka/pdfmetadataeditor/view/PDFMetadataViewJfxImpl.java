@@ -1,4 +1,4 @@
-package org.ppadalka.pdfmetadataeditor;
+package org.ppadalka.pdfmetadataeditor.view;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -7,10 +7,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
+import org.ppadalka.pdfmetadataeditor.controller.PDFMetadataController;
+import org.ppadalka.pdfmetadataeditor.model.PDFMetadata;
 
 import java.time.LocalDateTime;
 
-public class PDFMetadataEditorView implements PDFMetadataView {
+public class PDFMetadataViewJfxImpl implements PDFMetadataView {
   @FXML
   private Text fileName;
   @FXML
@@ -33,8 +35,8 @@ public class PDFMetadataEditorView implements PDFMetadataView {
   private final PDFMetadataController controller;
   private final StringConverter<LocalDateTime> datetime;
 
-  public PDFMetadataEditorView(PDFMetadataController controller,
-                               StringConverter<LocalDateTime> datetime) {
+  public PDFMetadataViewJfxImpl(PDFMetadataController controller,
+                                StringConverter<LocalDateTime> datetime) {
     this.controller = controller;
     this.datetime = datetime;
   }

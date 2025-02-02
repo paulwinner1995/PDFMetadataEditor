@@ -1,4 +1,4 @@
-package org.ppadalka.pdfmetadataeditor;
+package org.ppadalka.pdfmetadataeditor.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

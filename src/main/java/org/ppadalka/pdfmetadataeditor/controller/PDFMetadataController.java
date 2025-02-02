@@ -1,7 +1,9 @@
-package org.ppadalka.pdfmetadataeditor;
+package org.ppadalka.pdfmetadataeditor.controller;
 
-import org.ppadalka.pdfmetadataeditor.time.CalendarService;
 import org.ppadalka.pdfmetadataeditor.dialog.DialogWindowService;
+import org.ppadalka.pdfmetadataeditor.model.PDFDocumentModel;
+import org.ppadalka.pdfmetadataeditor.time.CalendarService;
+import org.ppadalka.pdfmetadataeditor.view.PDFMetadataView;
 
 import java.io.IOException;
 

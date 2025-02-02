@@ -1,4 +1,6 @@
-package org.ppadalka.pdfmetadataeditor;
+package org.ppadalka.pdfmetadataeditor.view;
+
+import org.ppadalka.pdfmetadataeditor.model.PDFMetadata;
 
 public interface PDFMetadataView {
   boolean isReadonlyModeActive();

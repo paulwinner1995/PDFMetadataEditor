@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <VBox alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.ppadalka.pdfmetadataeditor.PDFMetadataEditorView">
+      fx:controller="org.ppadalka.pdfmetadataeditor.view.PDFMetadataViewJfxImpl">
     <MenuBar>
         <Menu text="%menu.file">
             <MenuItem text="%menu.file.open" onAction="#onFileOpen"/>

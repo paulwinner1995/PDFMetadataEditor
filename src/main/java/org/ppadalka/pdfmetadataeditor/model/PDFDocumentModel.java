@@ -1,4 +1,4 @@
-package org.ppadalka.pdfmetadataeditor;
+package org.ppadalka.pdfmetadataeditor.model;
 
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
