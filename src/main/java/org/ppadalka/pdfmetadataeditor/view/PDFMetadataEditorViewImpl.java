@@ -10,9 +10,12 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import org.ppadalka.pdfmetadataeditor.controller.PDFMetadataController;
+import org.ppadalka.pdfmetadataeditor.dialog.DialogWindowService;
 import org.ppadalka.pdfmetadataeditor.dto.PDFMetadataView;
 
+import java.io.File;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static org.ppadalka.pdfmetadataeditor.util.Predicates.byMenuItemId;
@@ -38,41 +41,36 @@ public class PDFMetadataEditorViewImpl implements PDFMetadataEditorView {
   private Menu menu;
 
   private final PDFMetadataController controller;
+  private final DialogWindowService dialog;
   private final StringConverter<LocalDateTime> datetime;
 
-  public PDFMetadataEditorViewImpl(PDFMetadataController controller,
-                                   StringConverter<LocalDateTime> datetime) {
+
+  public PDFMetadataEditorViewImpl(final PDFMetadataController controller,
+                                   final DialogWindowService dialog,
+                                   final StringConverter<LocalDateTime> datetime) {
     this.controller = controller;
+    this.dialog = dialog;
     this.datetime = datetime;
   }
 
-  @FXML
-  protected void initialize() {
-    subscribeToChanges(title, controller::setTitle);
-    subscribeToChanges(author, controller::setAuthor);
-    subscribeToChanges(subject, controller::setSubject);
-    subscribeToChanges(keywords, controller::setKeywords);
-
-    subscribeToChanges(readonly, title::setDisable);
-    subscribeToChanges(readonly, author::setDisable);
-    subscribeToChanges(readonly, subject::setDisable);
-    subscribeToChanges(readonly, keywords::setDisable);
-    subscribeToChanges(readonly, controller.createReadonlyModeToggleSubscriber(this));
+  @Override
+  public Optional<File> showOpenFileDialog() {
+    return dialog.openPdfFile();
   }
 
-  @FXML
-  protected void onFileOpen() {
-    controller.openDocument(this);
+  @Override
+  public boolean showDiscardChangesDialog() {
+    return dialog.discardChanges();
   }
 
-  @FXML
-  protected void onFileSave() {
-    controller.saveDocument(this);
+  @Override
+  public void showFileSaveSuccessAlert(final String fileName) {
+    dialog.showFileSaveSuccessAlert(fileName);
   }
 
-  @FXML
-  protected void onCloseButtonClick() {
-    controller.close(this);
+  @Override
+  public void showFileSaveFailedAlert(final String fileName) {
+    dialog.showFileSaveFailedAlert(fileName);
   }
 
   @Override
@@ -96,6 +94,35 @@ public class PDFMetadataEditorViewImpl implements PDFMetadataEditorView {
   @Override
   public void close() {
     Platform.exit();
+  }
+
+  @FXML
+  protected void initialize() {
+    subscribeToChanges(title, controller::setTitle);
+    subscribeToChanges(author, controller::setAuthor);
+    subscribeToChanges(subject, controller::setSubject);
+    subscribeToChanges(keywords, controller::setKeywords);
+
+    subscribeToChanges(readonly, title::setDisable);
+    subscribeToChanges(readonly, author::setDisable);
+    subscribeToChanges(readonly, subject::setDisable);
+    subscribeToChanges(readonly, keywords::setDisable);
+    subscribeToChanges(readonly, readonly -> controller.toggleReadonlyMode(this, readonly));
+  }
+
+  @FXML
+  protected void onFileOpen() {
+    controller.openDocument(this);
+  }
+
+  @FXML
+  protected void onFileSave() {
+    controller.saveDocument(this);
+  }
+
+  @FXML
+  protected void onCloseButtonClick() {
+    controller.close(this);
   }
 
   private void subscribeToChanges(final TextInputControl control, final Consumer<String> consumer) {

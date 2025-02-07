@@ -1,4 +1,4 @@
-package org.ppadalka.pdfmetadataeditor.time;
+package org.ppadalka.pdfmetadataeditor.datetime;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -6,7 +6,9 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CalendarServiceImpl implements CalendarService {
+class CalendarServiceImpl implements CalendarService {
+  CalendarServiceImpl() {
+  }
 
   @Override
   public Calendar getCurrentMoment() {

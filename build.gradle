@@ -15,6 +15,7 @@ repositories {
 
 ext {
     junitVersion = '5.10.0'
+    guiceVersion = '7.0.0'
     pdfboxVersion = '3.0.4'
 }
 
@@ -38,6 +39,8 @@ javafx {
 dependencies {
     implementation('org.controlsfx:controlsfx:11.1.2')
     implementation("org.apache.pdfbox:pdfbox:${pdfboxVersion}")
+    implementation("com.google.inject:guice:${guiceVersion}")
+    implementation("com.google.inject.extensions:guice-assistedinject:${guiceVersion}")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")

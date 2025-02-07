@@ -1,5 +1,7 @@
 package org.ppadalka.pdfmetadataeditor.dialog;
 
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -15,11 +17,12 @@ import java.util.ResourceBundle;
 
 import static org.ppadalka.pdfmetadataeditor.util.Predicates.buttonPressed;
 
-public class DialogWindowServiceImpl implements DialogWindowService {
+class DialogWindowServiceImpl implements DialogWindowService {
   private final ResourceBundle bundle;
   private final Stage window;
 
-  public DialogWindowServiceImpl(final ResourceBundle bundle, final Stage window) {
+  @Inject
+  DialogWindowServiceImpl(final ResourceBundle bundle, @Assisted final Stage window) {
     this.bundle = bundle;
     this.window = window;
   }

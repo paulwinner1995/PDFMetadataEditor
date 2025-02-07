@@ -3,7 +3,7 @@ package org.ppadalka.pdfmetadataeditor.controller;
 import org.ppadalka.pdfmetadataeditor.dto.PDFMetadata;
 import org.ppadalka.pdfmetadataeditor.dto.PDFMetadataForm;
 
-public abstract class PDFMetadataState implements PDFMetadataForm {
+abstract class PDFMetadataState implements PDFMetadataForm {
 
   public abstract boolean hasChanges();
 
