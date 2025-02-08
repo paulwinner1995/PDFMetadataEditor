@@ -30,6 +30,7 @@
                GridPane.rowIndex="0"
                GridPane.columnIndex="0"/>
         <Text fx:id="fileName"
+              text="%text.file.placeholder"
               GridPane.rowIndex="0"
               GridPane.columnIndex="1"/>
         <!-- Title -->
