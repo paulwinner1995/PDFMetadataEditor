@@ -10,7 +10,7 @@ module org.ppadalka.pdfmetadataeditor {
 
   exports org.ppadalka.pdfmetadataeditor;
 
-  opens org.ppadalka.pdfmetadataeditor.controller to com.google.guice;
+  opens org.ppadalka.pdfmetadataeditor.presenter to com.google.guice;
   opens org.ppadalka.pdfmetadataeditor.dialog to com.google.guice;
   opens org.ppadalka.pdfmetadataeditor.datetime to com.google.guice;
   opens org.ppadalka.pdfmetadataeditor.i18n to com.google.guice;

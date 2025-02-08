@@ -1,9 +1,9 @@
-package org.ppadalka.pdfmetadataeditor.controller;
+package org.ppadalka.pdfmetadataeditor.presenter;
 
 import org.ppadalka.pdfmetadataeditor.dto.PDFMetadataForm;
 import org.ppadalka.pdfmetadataeditor.view.PDFMetadataEditorView;
 
-public interface PDFMetadataController extends PDFMetadataForm {
+public interface PDFMetadataPresenter extends PDFMetadataForm {
 
   void openDocument(final PDFMetadataEditorView view);
 

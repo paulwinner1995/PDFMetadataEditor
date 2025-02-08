@@ -1,4 +1,4 @@
-package org.ppadalka.pdfmetadataeditor.controller;
+package org.ppadalka.pdfmetadataeditor.presenter;
 
 import org.ppadalka.pdfmetadataeditor.dto.PDFMetadata;
 import org.ppadalka.pdfmetadataeditor.dto.PDFMetadataForm;

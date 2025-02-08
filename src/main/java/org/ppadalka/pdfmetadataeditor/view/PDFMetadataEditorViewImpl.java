@@ -9,9 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
-import org.ppadalka.pdfmetadataeditor.controller.PDFMetadataController;
 import org.ppadalka.pdfmetadataeditor.dialog.DialogWindowService;
 import org.ppadalka.pdfmetadataeditor.dto.PDFMetadataView;
+import org.ppadalka.pdfmetadataeditor.presenter.PDFMetadataPresenter;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -40,15 +40,15 @@ public class PDFMetadataEditorViewImpl implements PDFMetadataEditorView {
   @FXML
   private Menu menu;
 
-  private final PDFMetadataController controller;
+  private final PDFMetadataPresenter presenter;
   private final DialogWindowService dialog;
   private final StringConverter<LocalDateTime> datetime;
 
 
-  public PDFMetadataEditorViewImpl(final PDFMetadataController controller,
+  public PDFMetadataEditorViewImpl(final PDFMetadataPresenter presenter,
                                    final DialogWindowService dialog,
                                    final StringConverter<LocalDateTime> datetime) {
-    this.controller = controller;
+    this.presenter = presenter;
     this.dialog = dialog;
     this.datetime = datetime;
   }
@@ -98,31 +98,31 @@ public class PDFMetadataEditorViewImpl implements PDFMetadataEditorView {
 
   @FXML
   protected void initialize() {
-    subscribeToChanges(title, controller::setTitle);
-    subscribeToChanges(author, controller::setAuthor);
-    subscribeToChanges(subject, controller::setSubject);
-    subscribeToChanges(keywords, controller::setKeywords);
+    subscribeToChanges(title, presenter::setTitle);
+    subscribeToChanges(author, presenter::setAuthor);
+    subscribeToChanges(subject, presenter::setSubject);
+    subscribeToChanges(keywords, presenter::setKeywords);
 
     subscribeToChanges(readonly, title::setDisable);
     subscribeToChanges(readonly, author::setDisable);
     subscribeToChanges(readonly, subject::setDisable);
     subscribeToChanges(readonly, keywords::setDisable);
-    subscribeToChanges(readonly, readonly -> controller.toggleReadonlyMode(this, readonly));
+    subscribeToChanges(readonly, readonly -> presenter.toggleReadonlyMode(this, readonly));
   }
 
   @FXML
   protected void onFileOpen() {
-    controller.openDocument(this);
+    presenter.openDocument(this);
   }
 
   @FXML
   protected void onFileSave() {
-    controller.saveDocument(this);
+    presenter.saveDocument(this);
   }
 
   @FXML
   protected void onCloseButtonClick() {
-    controller.close(this);
+    presenter.close(this);
   }
 
   private void subscribeToChanges(final TextInputControl control, final Consumer<String> consumer) {

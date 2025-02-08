@@ -1,20 +1,20 @@
-package org.ppadalka.pdfmetadataeditor.controller;
+package org.ppadalka.pdfmetadataeditor.presenter;
 
 import com.google.inject.Inject;
-import org.ppadalka.pdfmetadataeditor.model.PDFDocumentModel;
 import org.ppadalka.pdfmetadataeditor.datetime.CalendarService;
+import org.ppadalka.pdfmetadataeditor.model.PDFDocumentModel;
 import org.ppadalka.pdfmetadataeditor.view.PDFMetadataEditorView;
 
 import java.io.IOException;
 
-class PDFMetadataControllerImpl implements PDFMetadataController {
+class PDFMetadataPresenterImpl implements PDFMetadataPresenter {
   private final CalendarService calendar;
 
   private PDFDocumentModel document;
   private PDFMetadataState form = PDFMetadataState.empty();
 
   @Inject
-  PDFMetadataControllerImpl(final CalendarService calendar) {
+  PDFMetadataPresenterImpl(final CalendarService calendar) {
     this.calendar = calendar;
   }
 
