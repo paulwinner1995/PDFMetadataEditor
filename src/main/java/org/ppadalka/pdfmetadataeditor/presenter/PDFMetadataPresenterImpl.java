@@ -26,6 +26,11 @@ class PDFMetadataPresenterImpl implements PDFMetadataPresenter {
 
     if (file.isPresent()) {
       try {
+        // Close previously opened document if exist
+        if (document != null) {
+          document.close();
+        }
+
         document = new PDFDocumentModel(file.get());
 
         updateForm();
@@ -33,7 +38,8 @@ class PDFMetadataPresenterImpl implements PDFMetadataPresenter {
         // TODO: Show alert that document is protected by password
         // TODO: Show alert that document is corrupted
         // TODO: Handle it properly
-        throw new RuntimeException(e);
+        // TODO: Replace with logger
+        System.err.println(e.getMessage());
       }
 
       view.notifyMetadataUpdated(form.getValue());
@@ -68,8 +74,13 @@ class PDFMetadataPresenterImpl implements PDFMetadataPresenter {
 
   public void close(final PDFMetadataEditorView view) {
     if (!form.hasChanges() || view.showDiscardChangesDialog()) {
-      // TODO: Show we close model here also?
-      view.close();
+      try {
+        document.close();
+        view.close();
+      } catch (IOException e) {
+        // TODO: Replace with logger
+        System.err.println(e.getMessage());
+      }
     }
   }
 

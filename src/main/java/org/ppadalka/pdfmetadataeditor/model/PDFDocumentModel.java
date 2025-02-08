@@ -55,4 +55,8 @@ public class PDFDocumentModel {
 
     // TODO: What if file cannot be deleted?
   }
+
+  public void close() throws IOException {
+    document.close();
+  }
 }
