@@ -9,6 +9,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
+import org.ppadalka.pdfmetadataeditor.command.AuthorChangeCommand;
+import org.ppadalka.pdfmetadataeditor.command.InputChangeCommand;
+import org.ppadalka.pdfmetadataeditor.command.KeywordsChangeCommand;
+import org.ppadalka.pdfmetadataeditor.command.SubjectChangeCommand;
+import org.ppadalka.pdfmetadataeditor.command.TitleChangeCommand;
+import org.ppadalka.pdfmetadataeditor.command.ToggleReadonlyCommand;
 import org.ppadalka.pdfmetadataeditor.dialog.DialogWindowService;
 import org.ppadalka.pdfmetadataeditor.dto.PDFMetadataView;
 import org.ppadalka.pdfmetadataeditor.presenter.PDFMetadataPresenter;
@@ -98,16 +104,11 @@ public class PDFMetadataEditorViewImpl implements PDFMetadataEditorView {
 
   @FXML
   protected void initialize() {
-    subscribeToChanges(title, presenter::setTitle);
-    subscribeToChanges(author, presenter::setAuthor);
-    subscribeToChanges(subject, presenter::setSubject);
-    subscribeToChanges(keywords, presenter::setKeywords);
-
-    subscribeToChanges(readonly, title::setDisable);
-    subscribeToChanges(readonly, author::setDisable);
-    subscribeToChanges(readonly, subject::setDisable);
-    subscribeToChanges(readonly, keywords::setDisable);
-    subscribeToChanges(readonly, readonly -> presenter.toggleReadonlyMode(this, readonly));
+    subscribeToChanges(title, TitleChangeCommand::new);
+    subscribeToChanges(author, AuthorChangeCommand::new);
+    subscribeToChanges(subject, SubjectChangeCommand::new);
+    subscribeToChanges(keywords, KeywordsChangeCommand::new);
+    subscribeToChanges(readonly, this::onReadonlyChange);
   }
 
   @FXML
@@ -125,12 +126,20 @@ public class PDFMetadataEditorViewImpl implements PDFMetadataEditorView {
     presenter.close(this);
   }
 
-  private void subscribeToChanges(final TextInputControl control, final Consumer<String> consumer) {
+  private void onReadonlyChange(boolean readonly) {
+    title.setDisable(readonly);
+    author.setDisable(readonly);
+    subject.setDisable(readonly);
+    keywords.setDisable(readonly);
+    presenter.executeInputChange(new ToggleReadonlyCommand(this, !readonly, readonly));
+  }
+
+  private void subscribeToChanges(final TextInputControl control, final InputChangeCommandFactory<String> command) {
     // We don't need blank line as initial value
     control.setText(null);
     // TODO: Set some delay to input field
     control.textProperty()
-            .addListener((prop, prev, value) -> consumer.accept(value));
+            .addListener((prop, prev, value) -> presenter.executeInputChange(command.create(this, prev, value)));
   }
 
   private void subscribeToChanges(final CheckBox checkbox, final Consumer<Boolean> consumer) {
@@ -139,5 +148,10 @@ public class PDFMetadataEditorViewImpl implements PDFMetadataEditorView {
               System.out.println("Checkbox: " + prev + "->" + value);
               consumer.accept(value);
             });
+  }
+
+  @FunctionalInterface
+  private interface InputChangeCommandFactory<T> {
+    InputChangeCommand<T> create(final PDFMetadataEditorView view, final T oldValue, final T newValue);
   }
 }

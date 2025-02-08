@@ -1,8 +1,10 @@
 package org.ppadalka.pdfmetadataeditor.presenter;
 
 import com.google.inject.Inject;
+import org.ppadalka.pdfmetadataeditor.command.InputChangeCommand;
 import org.ppadalka.pdfmetadataeditor.datetime.CalendarService;
 import org.ppadalka.pdfmetadataeditor.model.PDFDocumentModel;
+import org.ppadalka.pdfmetadataeditor.model.PDFMetadataForm;
 import org.ppadalka.pdfmetadataeditor.view.PDFMetadataEditorView;
 
 import java.io.IOException;
@@ -11,7 +13,7 @@ class PDFMetadataPresenterImpl implements PDFMetadataPresenter {
   private final CalendarService calendar;
 
   private PDFDocumentModel document;
-  private PDFMetadataState form = PDFMetadataState.empty();
+  private PDFMetadataForm form = PDFMetadataForm.empty();
 
   @Inject
   PDFMetadataPresenterImpl(final CalendarService calendar) {
@@ -26,7 +28,7 @@ class PDFMetadataPresenterImpl implements PDFMetadataPresenter {
       try {
         document = new PDFDocumentModel(file.get());
 
-        updateState();
+        updateForm();
       } catch (IOException e) {
         // TODO: Show alert that document is protected by password
         // TODO: Show alert that document is corrupted
@@ -48,7 +50,7 @@ class PDFMetadataPresenterImpl implements PDFMetadataPresenter {
       document.updateMetadata(metadata, calendar::getCurrentMoment);
       document.saveWithReplace();
 
-      updateState();
+      updateForm();
 
       view.notifyMetadataUpdated(form.getValue());
       view.showFileSaveSuccessAlert(fileName);
@@ -60,11 +62,8 @@ class PDFMetadataPresenterImpl implements PDFMetadataPresenter {
   }
 
   @Override
-  public void toggleReadonlyMode(final PDFMetadataEditorView view, boolean readonly) {
-    if (readonly && form.hasChanges()) {
-      form.restore();
-      view.notifyMetadataUpdated(form.getValue()); // Discard changes if enter to readonly mode
-    }
+  public <T> void executeInputChange(final InputChangeCommand<T> command) {
+    command.execute(form);
   }
 
   public void close(final PDFMetadataEditorView view) {
@@ -74,27 +73,7 @@ class PDFMetadataPresenterImpl implements PDFMetadataPresenter {
     }
   }
 
-  @Override
-  public void setTitle(final String title) {
-    form.setTitle(title);
-  }
-
-  @Override
-  public void setAuthor(final String author) {
-    form.setAuthor(author);
-  }
-
-  @Override
-  public void setSubject(final String subject) {
-    form.setSubject(subject);
-  }
-
-  @Override
-  public void setKeywords(final String keywords) {
-    form.setKeywords(keywords);
-  }
-
-  private void updateState() {
-    form = PDFMetadataState.from(document.getMetadata(calendar::toLocalDateTime));
+  private void updateForm() {
+    form = PDFMetadataForm.from(document.getMetadata(calendar::toLocalDateTime));
   }
 }

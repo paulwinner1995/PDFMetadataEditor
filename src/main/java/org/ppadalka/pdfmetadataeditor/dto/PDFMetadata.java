@@ -3,7 +3,7 @@ package org.ppadalka.pdfmetadataeditor.dto;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class PDFMetadata implements PDFMetadataForm, PDFMetadataView {
+public class PDFMetadata implements PDFMetadataView {
   private final String fileName;
   private String title;
   private String author;
@@ -44,7 +44,6 @@ public class PDFMetadata implements PDFMetadataForm, PDFMetadataView {
     return title;
   }
 
-  @Override
   public void setTitle(final String title) {
     this.title = title;
   }
@@ -54,7 +53,6 @@ public class PDFMetadata implements PDFMetadataForm, PDFMetadataView {
     return author;
   }
 
-  @Override
   public void setAuthor(final String author) {
     this.author = author;
   }
@@ -64,7 +62,6 @@ public class PDFMetadata implements PDFMetadataForm, PDFMetadataView {
     return subject;
   }
 
-  @Override
   public void setSubject(final String subject) {
     this.subject = subject;
   }
@@ -74,7 +71,6 @@ public class PDFMetadata implements PDFMetadataForm, PDFMetadataView {
     return keywords;
   }
 
-  @Override
   public void setKeywords(final String keywords) {
     this.keywords = keywords;
   }

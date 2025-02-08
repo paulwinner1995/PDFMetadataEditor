@@ -15,5 +15,6 @@ module org.ppadalka.pdfmetadataeditor {
   opens org.ppadalka.pdfmetadataeditor.datetime to com.google.guice;
   opens org.ppadalka.pdfmetadataeditor.i18n to com.google.guice;
   opens org.ppadalka.pdfmetadataeditor.view to com.google.guice, javafx.fxml;
+  opens org.ppadalka.pdfmetadataeditor.model to com.google.guice;
   opens org.ppadalka.pdfmetadataeditor to com.google.guice;
 }
