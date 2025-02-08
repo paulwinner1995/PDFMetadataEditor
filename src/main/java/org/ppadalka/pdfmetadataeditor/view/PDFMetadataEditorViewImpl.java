@@ -135,8 +135,6 @@ public class PDFMetadataEditorViewImpl implements PDFMetadataEditorView {
   }
 
   private void subscribeToChanges(final TextInputControl control, final InputChangeCommandFactory<String> command) {
-    // We don't need blank line as initial value
-    control.setText(null);
     // TODO: Set some delay to input field
     control.textProperty()
             .addListener((prop, prev, value) -> presenter.executeInputChange(command.create(this, prev, value)));
