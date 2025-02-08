@@ -142,10 +142,7 @@ public class PDFMetadataEditorViewImpl implements PDFMetadataEditorView {
 
   private void subscribeToChanges(final CheckBox checkbox, final Consumer<Boolean> consumer) {
     checkbox.selectedProperty()
-            .addListener((prop, prev, value) -> {
-              System.out.println("Checkbox: " + prev + "->" + value);
-              consumer.accept(value);
-            });
+            .addListener((prop, prev, value) -> consumer.accept(value));
   }
 
   @FunctionalInterface
